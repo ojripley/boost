@@ -58,9 +58,9 @@ public class Rocket : MonoBehaviour {
 			audioSource.Stop();
 		}
 
-		if (Input.GetKey(KeyCode.Q)) {
+		if (Input.GetKey(KeyCode.A)) {
 			transform.Rotate(Vector3.forward * rotationMultiplier * Time.deltaTime); // left handed coordinate system in the z-axis. this means +ve values go counter-clockwise
-		} else if (Input.GetKey(KeyCode.E)) {
+		} else if (Input.GetKey(KeyCode.D)) {
 			transform.Rotate(Vector3.back * rotationMultiplier * Time.deltaTime);
 		}
 
