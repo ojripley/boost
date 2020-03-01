@@ -25,7 +25,7 @@ public class Rocket : MonoBehaviour {
 		}
 
 		if (Input.GetKey(KeyCode.Q)) {
-			transform.Rotate(Vector3.forward); // left handed z-axis. this means +ve values go counter-clockwise
+			transform.Rotate(Vector3.forward); // left handed coordinate system in the z-axis. this means +ve values go counter-clockwise
 		} else if (Input.GetKey(KeyCode.E)) {
 			transform.Rotate(Vector3.back);
 		}
