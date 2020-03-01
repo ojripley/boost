@@ -23,6 +23,24 @@ public class Rocket : MonoBehaviour {
 		handleInput();
 	}
 
+	private void OnCollisionEnter(Collision collision) {
+		switch(collision.gameObject.tag) {
+			case "Friendly":
+				print("All clear");
+				// TODO: nothing
+				break;
+			case "Finish":
+				print("You beat the level!");
+				break;
+			case "Fuel":
+				print("Gassed up homie");
+				break;
+			default:
+				print("dead");
+				break;
+		}
+	}
+
 	private void handleInput() {
 
 		rigidBody.freezeRotation = true; // disallows external control, prevents physics induced spin
