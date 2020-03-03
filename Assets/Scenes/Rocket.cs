@@ -118,7 +118,7 @@ public class Rocket : MonoBehaviour {
 			}
 			
 			// apply thrust
-			rigidBody.AddRelativeForce(Vector3.up * progradeThrustMulitplier);
+			rigidBody.AddRelativeForce(Vector3.up * progradeThrustMulitplier * Time.deltaTime); // multiplying by Time.deltaTime ensures frame independence
 		}
 
 		if (Input.GetKeyUp(KeyCode.Space)) {

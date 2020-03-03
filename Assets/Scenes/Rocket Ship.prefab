@@ -432,8 +432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09efa0f97e2a116449751403b820bdeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progradeThrustMulitplier: 2000
-  rotationMultiplier: 400
+  progradeThrustMulitplier: 200000
+  rotationMultiplier: 420
   thrustAudio: {fileID: 8300000, guid: 26639b3292281e94186a40f3b3e7c6d2, type: 3}
   deathAudio: {fileID: 8300000, guid: 24d6985e18606a340bee6b0e281ecbb9, type: 3}
   transcendAudio: {fileID: 8300000, guid: 02ea71de989bc744686937ffbf3df68b, type: 3}
