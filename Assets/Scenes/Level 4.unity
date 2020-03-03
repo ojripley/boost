@@ -2893,25 +2893,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6337845537061750020, guid: 82ec7004c10ba5e4eb3e6fc08a97e94a,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 805feaff2a8cef4439e30b11a7d4e730, type: 2}
     - target: {fileID: 6574832469462223867, guid: 82ec7004c10ba5e4eb3e6fc08a97e94a,
         type: 3}
       propertyPath: m_Name
       value: Launch Pad
-      objectReference: {fileID: 0}
-    - target: {fileID: 6574832469462223867, guid: 82ec7004c10ba5e4eb3e6fc08a97e94a,
-        type: 3}
-      propertyPath: m_TagString
-      value: Friendly
-      objectReference: {fileID: 0}
-    - target: {fileID: 6574832469462223867, guid: 82ec7004c10ba5e4eb3e6fc08a97e94a,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8848151771490621804, guid: 82ec7004c10ba5e4eb3e6fc08a97e94a,
         type: 3}
@@ -3031,11 +3016,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7086730576698976171, guid: 50ef0809c0683e84692e3a97e02708fc,
-        type: 3}
-      propertyPath: m_Drag
-      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8289174080371102592, guid: 50ef0809c0683e84692e3a97e02708fc,
         type: 3}
