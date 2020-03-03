@@ -21,11 +21,13 @@ public class OscillatingObstacle : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-
+		if (period <= Mathf.Epsilon) { // epsilon is the smallest possible float
+			return; // prevent NaN error
+		}
 		const float tau = Mathf.PI * 2f; // roughly 2.68, 2 PI
 		float cycles = Time.time / period; // Time.time is frame independent by default
 
-		float rawSinWave = Mathf.Sin(cycles * tau);
+		float rawSinWave = Mathf.Sin(cycles * tau); // goes from -1 to 1
 
 		movementFactor = rawSinWave / 2f + 0.5f;
 		Vector3 offset = movementFactor * movementVector;

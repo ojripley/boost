@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour {
 
+	// debugging
+	public bool collisionsEnabled = true;
+
 	Rigidbody rigidBody;
 	AudioSource audioSource;
 
@@ -18,8 +21,6 @@ public class Rocket : MonoBehaviour {
 	[SerializeField] ParticleSystem explosionParticles;
 	[SerializeField] ParticleSystem successParticles;
 
-	int currentLevel = 0;
-
 	enum State { Alive, Dying, Transcending };
 	State state = State.Alive;
 
@@ -32,22 +33,29 @@ public class Rocket : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		HandleInput();
+
+		if (Debug.isDebugBuild) {
+			HandleDebugInput();
+		}
 	}
 
 	private void LoadFirstLevel() {
-		currentLevel = 0;
-
-		SceneManager.LoadScene(currentLevel);
+		SceneManager.LoadScene(0);
 	}
 
 	private void LoadNextLevel() {
-		currentLevel++;
+		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		currentSceneIndex++;
 
-		SceneManager.LoadScene(currentLevel);
+		if (currentSceneIndex == SceneManager.sceneCountInBuildSettings) {
+			LoadFirstLevel();
+		} else {
+			SceneManager.LoadScene(currentSceneIndex);
+		}
 	}
 
 	private void OnCollisionEnter(Collision collision) {
-		if (state == State.Alive) {
+		if (state == State.Alive && collisionsEnabled) {
 			switch(collision.gameObject.tag) {
 				case "Friendly":
 					print("on the launch pad");
@@ -74,7 +82,7 @@ public class Rocket : MonoBehaviour {
 
 		state = State.Transcending;
 
-		Invoke("LoadNextLevel", 2.1f); // todo: paramatarize time
+		Invoke("LoadNextLevel", 2.1f);
 	}
 
 	private void HandleDeath() {
@@ -96,11 +104,6 @@ public class Rocket : MonoBehaviour {
 
 			// can always thrust, even while rotating
 			RespondToThrustInput();
-
-			//// stop playing when space is released
-			//if (Input.GetKeyUp(KeyCode.Space)) {
-			//	audioSource.Stop();
-			//}
 
 			RespondToRotateInput();
 		}
@@ -132,6 +135,14 @@ public class Rocket : MonoBehaviour {
 			transform.Rotate(Vector3.forward * rotationMultiplier * Time.deltaTime); // left handed coordinate system in the z-axis. this means +ve values go counter-clockwise
 		} else if (Input.GetKey(KeyCode.D)) {
 			transform.Rotate(Vector3.back * rotationMultiplier * Time.deltaTime);
+		}
+	}
+
+	private void HandleDebugInput() {
+		if (Input.GetKeyDown(KeyCode.L)) {
+			LoadNextLevel();
+		} else if (Input.GetKeyDown(KeyCode.C)) {
+			collisionsEnabled = !collisionsEnabled;
 		}
 	}
 }
