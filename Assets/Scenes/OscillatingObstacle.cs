@@ -10,7 +10,7 @@ public class OscillatingObstacle : MonoBehaviour {
 	[SerializeField] float period = 2f; // time for one complete cycle
 
 	// TODO: remove this from the inspector later
-	[Range(0, 1)] [SerializeField] float movementFactor;
+	[Range(0, 1)] float movementFactor; // 0 for not moved, 1 for fully moved
 
 	Vector3 startPosition;
 
@@ -27,7 +27,7 @@ public class OscillatingObstacle : MonoBehaviour {
 
 		float rawSinWave = Mathf.Sin(cycles * tau);
 
-		movementFactor = rawSinWave / 2f 
+		movementFactor = rawSinWave / 2f + 0.5f;
 		Vector3 offset = movementFactor * movementVector;
 		transform.position = startPosition + offset;
   }
