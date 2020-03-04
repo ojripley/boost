@@ -54,6 +54,10 @@ public class Rocket : MonoBehaviour {
 		}
 	}
 
+	private void ReloadLevel() {
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
+
 	private void OnCollisionEnter(Collision collision) {
 		if (state == State.Alive && collisionsEnabled) {
 			switch(collision.gameObject.tag) {
@@ -94,7 +98,7 @@ public class Rocket : MonoBehaviour {
 
 		state = State.Dying;
 
-		Invoke("LoadFirstLevel", 2f);
+		Invoke("ReloadLevel", 2f);
 	}
 
 	private void HandleInput() {

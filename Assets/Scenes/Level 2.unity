@@ -35,10 +35,10 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44824535, g: 0.49827296, b: 0.57558244, a: 1}
+  m_IndirectSpecularColor: {r: 0.322008, g: 0.3594864, b: 0.41740307, a: 0.5}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2529,7 +2529,7 @@ PrefabInstance:
     - target: {fileID: 4387052897281203769, guid: 4a6668f649f9fca42b2867555a51075e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -25
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 4387052897281203769, guid: 4a6668f649f9fca42b2867555a51075e,
         type: 3}
@@ -2772,11 +2772,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7086730576698976171, guid: 50ef0809c0683e84692e3a97e02708fc,
-        type: 3}
-      propertyPath: m_Drag
-      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8289174080371102592, guid: 50ef0809c0683e84692e3a97e02708fc,
         type: 3}
