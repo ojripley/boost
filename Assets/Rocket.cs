@@ -21,8 +21,11 @@ public class Rocket : MonoBehaviour {
 	[SerializeField] ParticleSystem explosionParticles;
 	[SerializeField] ParticleSystem successParticles;
 
+	[SerializeField] ParticleSystem laser;
+
 	enum State { Alive, Dying, Transcending };
 	State state = State.Alive;
+
 
 	// Start is called before the first frame update
 	void Start() {
@@ -93,6 +96,7 @@ public class Rocket : MonoBehaviour {
 		audioSource.Stop();
 		audioSource.PlayOneShot(deathAudio);
 
+		laser.Stop();
 		thrustParticles.Stop();
 		explosionParticles.Play();
 
@@ -110,6 +114,8 @@ public class Rocket : MonoBehaviour {
 			RespondToThrustInput();
 
 			RespondToRotateInput();
+
+			RespondToUtilities();
 		}
 
 		rigidBody.freezeRotation = false; // once player control is released, reallow physics induced spin
@@ -140,6 +146,20 @@ public class Rocket : MonoBehaviour {
 		} else if (Input.GetKey(KeyCode.D)) {
 			transform.Rotate(Vector3.back * rotationMultiplier * Time.deltaTime);
 		}
+	}
+
+	private void RespondToUtilities() {
+		if (Input.GetMouseButtonDown(0)) {
+			laser.Play();
+		}
+
+		if (Input.GetMouseButtonUp(0)) {
+			Invoke("StopLaser", 0.1f);
+		}
+	}
+
+	private void StopLaser() {
+		laser.Stop();
 	}
 
 	private void HandleDebugInput() {
