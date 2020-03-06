@@ -7,6 +7,10 @@ TagManager:
   - Friendly
   - Fuel
   - Obstacle
+  - Start
+  - Cam Constraint Left
+  - Cam Constraint Right
+  - Menu
   layers:
   - Default
   - TransparentFX

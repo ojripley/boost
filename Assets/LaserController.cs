@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class LaserController : MonoBehaviour {
 
-	[SerializeField] int RandomUpperBoundOn = 10;
+	[SerializeField] int RandomUpperBoundOn = 50;
 	[SerializeField] int RandomUpperBoundOff = 2;
 
 
 	// Start is called before the first frame update
 	void Start() {
-		print("number of lasers " + GameObject.FindObjectsOfType<ParticleSystem>().Length);
 	}
 
 	// Update is called once per frame
@@ -29,13 +28,8 @@ public class LaserController : MonoBehaviour {
 			int chanceLaserOn = random.Next(0, lasers.Length);
 
 			if (lasers[chanceLaserOn].name[0] == 'T') {
-				print("laser to turn on " + chanceLaserOn);
-
-
 				lasers[chanceLaserOn].Play(true);
 			}
-
-
 		}
 
 
@@ -44,9 +38,6 @@ public class LaserController : MonoBehaviour {
 			int chanceLaserOff = random.Next(0, lasers.Length);
 
 			if (lasers[chanceLaserOff].name[0] == 'T') {
-				print("laser to turn off " + chanceLaserOff);
-
-
 				lasers[chanceLaserOff].Stop(true);
 			}
 		}

@@ -64,7 +64,7 @@ public class Rocket : MonoBehaviour {
 	private void OnCollisionEnter(Collision collision) {
 		if (state == State.Alive && collisionsEnabled) {
 			switch(collision.gameObject.tag) {
-				case "Friendly":
+				case "Start":
 					print("on the launch pad");
 					break;
 				case "Finish":
@@ -143,8 +143,10 @@ public class Rocket : MonoBehaviour {
 	private void RespondToRotateInput() {
 		if (Input.GetKey(KeyCode.A)) {
 			transform.Rotate(Vector3.forward * rotationMultiplier * Time.deltaTime); // left handed coordinate system in the z-axis. this means +ve values go counter-clockwise
+			//playerCamera.transform.Rotate(Vector3.back * rotationMultiplier * Time.deltaTime);
 		} else if (Input.GetKey(KeyCode.D)) {
 			transform.Rotate(Vector3.back * rotationMultiplier * Time.deltaTime);
+			//playerCamera.transform.Rotate(Vector3.forward * rotationMultiplier * Time.deltaTime);
 		}
 	}
 
