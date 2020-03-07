@@ -61,6 +61,22 @@ public class Rocket : MonoBehaviour {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
+	private void OnTriggerEnter(Collider collider) {
+		if (state == State.Alive) {
+			switch (collider.gameObject.tag) {
+				case "Shield Trigger":
+					print("now shielded");
+					break;
+				case "Finish":
+					break;
+				case "Fuel":
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
 	private void OnCollisionEnter(Collision collision) {
 		if (state == State.Alive && collisionsEnabled) {
 			switch(collision.gameObject.tag) {
