@@ -95,6 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e047b71a277cc643a42de624714ef51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraHorizontalOffset: 10
-  cameraVerticalOffset: 0
+  cameraHorizontalOffset: 0
+  cameraVerticalOffset: 10
   cameraDepthOffset: 0

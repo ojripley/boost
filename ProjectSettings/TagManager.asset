@@ -12,6 +12,11 @@ TagManager:
   - Cam Constraint Right
   - Menu
   - Shield Trigger
+  - Enemy Laser
+  - Friendly Laser
+  - Stun Effect
+  - Cam Constraint Top
+  - Cam Constraint Bottom
   layers:
   - Default
   - TransparentFX

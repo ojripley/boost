@@ -25,6 +25,7 @@ public class Rocket : MonoBehaviour {
 
 	enum State { Alive, Dying, Transcending };
 	State state = State.Alive;
+	int shieldLayers = 0;
 
 
 	// Start is called before the first frame update
@@ -62,12 +63,13 @@ public class Rocket : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider collider) {
+		print(collider.name);
 		if (state == State.Alive) {
 			switch (collider.gameObject.tag) {
 				case "Shield Trigger":
-					print("now shielded");
+					shieldLayers = 3;
 					break;
-				case "Finish":
+				case "Enemy Laser":
 					break;
 				case "Fuel":
 					break;
@@ -77,7 +79,21 @@ public class Rocket : MonoBehaviour {
 		}
 	}
 
+
+	private void OnParticleCollision(GameObject collision) {
+		if (state == State.Alive) {
+			switch(collision.gameObject.tag) {
+				case "Enemy Laser":
+					HandleDeath();
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
 	private void OnCollisionEnter(Collision collision) {
+		print (collision.gameObject.name);
 		if (state == State.Alive && collisionsEnabled) {
 			switch(collision.gameObject.tag) {
 				case "Start":
@@ -90,7 +106,24 @@ public class Rocket : MonoBehaviour {
 					print("Gassed up homie");
 					break;
 				default:
-					HandleDeath();
+					if (shieldLayers > 0) {
+						//print(shieldLayers);
+					} else {
+						HandleDeath();
+					}
+					break;
+			}
+		}
+	}
+
+	private void OnCollisionExit(Collision collision) {
+		if (state == State.Alive && collisionsEnabled) {
+			switch (collision.gameObject.tag) {
+				default:
+					if (shieldLayers > 0) {
+						shieldLayers--;
+						print(shieldLayers);
+					}
 					break;
 			}
 		}
@@ -159,10 +192,8 @@ public class Rocket : MonoBehaviour {
 	private void RespondToRotateInput() {
 		if (Input.GetKey(KeyCode.A)) {
 			transform.Rotate(Vector3.forward * rotationMultiplier * Time.deltaTime); // left handed coordinate system in the z-axis. this means +ve values go counter-clockwise
-			//playerCamera.transform.Rotate(Vector3.back * rotationMultiplier * Time.deltaTime);
 		} else if (Input.GetKey(KeyCode.D)) {
 			transform.Rotate(Vector3.back * rotationMultiplier * Time.deltaTime);
-			//playerCamera.transform.Rotate(Vector3.forward * rotationMultiplier * Time.deltaTime);
 		}
 	}
 
