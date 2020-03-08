@@ -6,6 +6,8 @@ public class Rocket : MonoBehaviour {
 	// debugging
 	public bool collisionsEnabled = true;
 
+	HUD hud;
+
 	Rigidbody rigidBody;
 	AudioSource audioSource;
 
@@ -32,6 +34,7 @@ public class Rocket : MonoBehaviour {
 	void Start() {
 		rigidBody = GetComponent<Rigidbody>();
 		audioSource = GetComponent<AudioSource>();
+		hud = FindObjectOfType<HUD>();
 	}
 
 	// Update is called once per frame
@@ -79,7 +82,6 @@ public class Rocket : MonoBehaviour {
 		}
 	}
 
-
 	private void OnParticleCollision(GameObject collision) {
 		if (state == State.Alive) {
 			switch(collision.gameObject.tag) {
@@ -100,6 +102,7 @@ public class Rocket : MonoBehaviour {
 					print("on the launch pad");
 					break;
 				case "Finish":
+					//hud.GetFinalTime();
 					HandleLevelComplete();
 					break;
 				case "Fuel":
@@ -203,7 +206,7 @@ public class Rocket : MonoBehaviour {
 		}
 
 		if (Input.GetMouseButtonUp(0)) {
-			Invoke("StopLaser", 0.1f);
+			Invoke("StopLaser", 0.2f);
 		}
 	}
 

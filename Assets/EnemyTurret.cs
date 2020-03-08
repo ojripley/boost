@@ -8,6 +8,9 @@ public class EnemyTurret : MonoBehaviour {
 	[SerializeField] ParticleSystem laser;
 	[SerializeField] ParticleSystem stunEffect;
 
+	AudioSource audioSource;
+	[SerializeField] AudioClip disabledSound;
+
 	// Start is called before the first frame update
 	void Start() {
 		laser.Play();
@@ -17,6 +20,7 @@ public class EnemyTurret : MonoBehaviour {
 	void Update() {
 		if (!alive) {
 			laser.Stop();
+			audioSource.PlayOneShot(disabledSound);
 		}
 	}
 

@@ -11,8 +11,8 @@ public class CameraController : MonoBehaviour {
 	Vector3 constraintBottom;
 
 	[Header("Movement Settings")]
-	[SerializeField] float cameraHorizontalOffset = 10f;
-	[SerializeField] float cameraVerticalOffset = 10f;
+	[SerializeField] float cameraHorizontalOffset = 0f;
+	[SerializeField] float cameraVerticalOffset = 00f;
 	[SerializeField] float cameraDepthOffset = 0f;
 
 	Vector3 rocketStartPosition;

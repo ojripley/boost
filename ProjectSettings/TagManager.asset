@@ -17,6 +17,7 @@ TagManager:
   - Stun Effect
   - Cam Constraint Top
   - Cam Constraint Bottom
+  - Time
   layers:
   - Default
   - TransparentFX
