@@ -5,11 +5,14 @@ using UnityEngine;
 public class ScoreTracker : MonoBehaviour {
 
 	Rocket rocket;
-	public float score;
+	HUD hud;
+
+	public float totalScore;
 
 	// for counting flips
 	float flipStartAngle;
-	bool isFlipping;
+	bool isFlippingClockwise;
+	bool isFlippingCounterClockwise;
 	float degreesFlippedFramePrior = 0;
 	float degreesFlipped = 0;
 	string flipDirection;
@@ -19,12 +22,12 @@ public class ScoreTracker : MonoBehaviour {
 	// for counting burns
 	bool isBurning;
 	float burnStartTime;
-	float burnEndTime;
 	int burnStreak = 0; // in seconds
 
   // Start is called before the first frame update
   void Start() {
 		rocket = FindObjectOfType<Rocket>();
+		hud = FindObjectOfType<HUD>();
   }
 
   // Update is called once per frame
@@ -43,22 +46,35 @@ public class ScoreTracker : MonoBehaviour {
 		}
 
 		if (Input.GetKeyUp(KeyCode.Space)) {
-			burnEndTime = Time.time;
 			isBurning = false;
-			//print(burnEndTime - burnStartTime);
+			burnStreak = 0;
 		}
 
 		if ((Time.time - burnStartTime) - burnStreak >= 1f && isBurning) {
 			burnStreak++;
-			print(burnStreak);
+			totalScore += burnStreak * 100;
+			hud.QueueNewScore(burnStreak + "s BOOST!", burnStreak * 100);
 		}
 	}
 
 	private void TrackRotation() {
 
-		if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) {
+		if (Input.GetKeyUp(KeyCode.D)) {
 
-			isFlipping = false;
+			isFlippingClockwise = false;
+
+			if (flipsThisRotation > 0) {
+				flipsTotal += flipsThisRotation;
+				print("this rotation" + flipsThisRotation);
+			}
+
+			flipsThisRotation = 0;
+		}
+
+		if (Input.GetKeyUp(KeyCode.A)) {
+
+			isFlippingCounterClockwise = false;
+
 			if (flipsThisRotation > 0) {
 				flipsTotal += flipsThisRotation;
 			}
@@ -66,27 +82,14 @@ public class ScoreTracker : MonoBehaviour {
 			flipsThisRotation = 0;
 		}
 
-		if (isFlipping) {
-
-			degreesFlippedFramePrior = degreesFlipped;
-
-			if (flipDirection == "counterClockwise") {
-				
-				degreesFlipped = transform.eulerAngles.z - flipStartAngle;
-			} else if (flipDirection == "clockwise") {
-				degreesFlipped = flipStartAngle - transform.eulerAngles.z;
-			}
-				
-			if (degreesFlipped < degreesFlippedFramePrior) {
-
-				flipsThisRotation++;
-			}
-		}
 
 		if (Input.GetKeyDown(KeyCode.D)) {
-			isFlipping = true;
+			isFlippingClockwise = true;
+			isFlippingCounterClockwise = false;
 			flipDirection = "clockwise";
 			flipStartAngle = transform.eulerAngles.z;
+			degreesFlipped = 0;
+			degreesFlippedFramePrior = 0;
 			if (flipStartAngle < 180f) {
 				flipsThisRotation = -1;
 			} else {
@@ -95,13 +98,46 @@ public class ScoreTracker : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown(KeyCode.A)) {
-			isFlipping = true;
+			isFlippingClockwise = false;
+			isFlippingCounterClockwise = true;
 			flipDirection = "counterClockwise";
 			flipStartAngle = transform.eulerAngles.z;
+			degreesFlipped = 0;
+			degreesFlippedFramePrior = 0;
 			if (flipStartAngle > 180f) {
 				flipsThisRotation = -1;
 			} else {
 				flipsThisRotation = 0;
+			}
+		}
+
+		if (isFlippingClockwise) {
+
+			degreesFlippedFramePrior = degreesFlipped;
+				
+			degreesFlipped = flipStartAngle - transform.eulerAngles.z;
+				
+			if (degreesFlipped < degreesFlippedFramePrior) {
+				flipsThisRotation++;
+				if (flipsThisRotation > 0) {
+					hud.QueueNewScore(flipsThisRotation + "x FLIP!", flipsThisRotation * 100);
+					print("flips: " + flipsThisRotation);
+				}
+			}
+		}
+
+		if (isFlippingCounterClockwise) {
+
+			degreesFlippedFramePrior = degreesFlipped;
+
+			degreesFlipped = transform.eulerAngles.z - flipStartAngle;
+
+			if (degreesFlipped < degreesFlippedFramePrior) {
+				flipsThisRotation++;
+				if (flipsThisRotation > 0) {
+					hud.QueueNewScore(flipsThisRotation + "x FLIP!", flipsThisRotation * 100);
+					print("flips: " + flipsThisRotation);
+				}
 			}
 		}
 	}
