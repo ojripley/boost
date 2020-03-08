@@ -17,8 +17,10 @@ public class ScoreTracker : MonoBehaviour {
 	int flipsThisRotation = 0;
 
 	// for counting burns
+	bool isBurning;
 	float burnStartTime;
 	float burnEndTime;
+	int burnStreak = 0; // in seconds
 
   // Start is called before the first frame update
   void Start() {
@@ -34,18 +36,21 @@ public class ScoreTracker : MonoBehaviour {
   }
 
 	private void TrackBurnTime() {
-		if (Input.GetKey(KeyCode.Space)) {
+
+		if (Input.GetKeyDown(KeyCode.Space)) {
 			burnStartTime = Time.time;
+			isBurning = true;
 		}
 
 		if (Input.GetKeyUp(KeyCode.Space)) {
 			burnEndTime = Time.time;
+			isBurning = false;
+			//print(burnEndTime - burnStartTime);
 		}
 
-		if (burnEndTime - burnStartTime % 1000 > 1) { // if time of burn is longer than a second
-		  // todo hud.addBurnScore(time);
-
-			print(burnEndTime - burnStartTime);
+		if ((Time.time - burnStartTime) - burnStreak >= 1f && isBurning) {
+			burnStreak++;
+			print(burnStreak);
 		}
 	}
 
