@@ -25,8 +25,8 @@ public class Rocket : MonoBehaviour {
 
 	[SerializeField] ParticleSystem laser;
 
-	enum State { Alive, Dying, Transcending };
-	State state = State.Alive;
+	public enum State { Alive, Dying, Transcending };
+	public State state = State.Alive;
 	int shieldLayers = 0;
 
 
@@ -66,7 +66,7 @@ public class Rocket : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider collider) {
-		print(collider.name);
+		//print(collider.name);
 		if (state == State.Alive) {
 			switch (collider.gameObject.tag) {
 				case "Shield Trigger":
@@ -95,18 +95,18 @@ public class Rocket : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter(Collision collision) {
-		print (collision.gameObject.name);
+		//print (collision.gameObject.name);
 		if (state == State.Alive && collisionsEnabled) {
 			switch(collision.gameObject.tag) {
 				case "Start":
-					print("on the launch pad");
+					//print("on the launch pad");
 					break;
 				case "Finish":
 					//hud.GetFinalTime();
 					HandleLevelComplete();
 					break;
 				case "Fuel":
-					print("Gassed up homie");
+					//print("Gassed up homie");
 					break;
 				default:
 					if (shieldLayers > 0) {

@@ -8,28 +8,28 @@ public class EnemyTurret : MonoBehaviour {
 	[SerializeField] ParticleSystem laser;
 	[SerializeField] ParticleSystem stunEffect;
 
-	AudioSource audioSource;
-	[SerializeField] AudioClip disabledSound;
+	AudioSource disabledSound;
 
 	// Start is called before the first frame update
 	void Start() {
 		laser.Play();
+		disabledSound = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
 	void Update() {
-		if (!alive) {
-			laser.Stop();
-			audioSource.PlayOneShot(disabledSound);
-		}
 	}
 
 	private void OnParticleCollision(GameObject collision) {
 		print(collision.gameObject.tag);
 		switch (collision.gameObject.tag) {
 			case "Friendly Laser":
+				if (alive) {
+					stunEffect.Play();
+					laser.Stop();
+					disabledSound.Play();
+				}
 				alive = false;
-				stunEffect.Play();
 				break;
 			default:
 				break;
