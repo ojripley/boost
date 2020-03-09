@@ -5,10 +5,10 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 
 	GameObject rocket;
-	Vector3 constraintLeft;
-	Vector3 constraintRight;
-	Vector3 constraintTop;
-	Vector3 constraintBottom;
+	//Vector3 constraintLeft;
+	//Vector3 constraintRight;
+	//Vector3 constraintTop;
+	//Vector3 constraintBottom;
 
 	[Header("Movement Settings")]
 	[SerializeField] float cameraHorizontalOffset = 0f;
@@ -21,10 +21,10 @@ public class CameraController : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start() {
 		cameraStartPosition = gameObject.transform.position;
-		constraintLeft = GameObject.FindGameObjectWithTag("Cam Constraint Left").transform.position;
-		constraintRight = GameObject.FindGameObjectWithTag("Cam Constraint Right").transform.position;
-		constraintTop = GameObject.FindGameObjectWithTag("Cam Constraint Top").transform.position;
-		constraintBottom = GameObject.FindGameObjectWithTag("Cam Constraint Bottom").transform.position;
+		//constraintLeft = GameObject.FindGameObjectWithTag("Cam Constraint Left").transform.position;
+		//constraintRight = GameObject.FindGameObjectWithTag("Cam Constraint Right").transform.position;
+		//constraintTop = GameObject.FindGameObjectWithTag("Cam Constraint Top").transform.position;
+		//constraintBottom = GameObject.FindGameObjectWithTag("Cam Constraint Bottom").transform.position;
 		rocket = GameObject.FindGameObjectWithTag("Player");
 	}
 
@@ -41,8 +41,8 @@ public class CameraController : MonoBehaviour {
 		float positionY = rocketCurrentPosition.y + cameraVerticalOffset;
 		float positionZ = cameraStartPosition.z + cameraDepthOffset;
 
-		positionX = Mathf.Clamp(positionX, constraintLeft.x,  constraintRight.x);
-		positionY = Mathf.Clamp(positionY, constraintBottom.y + 12, constraintTop.y - 12);
+		//positionX = Mathf.Clamp(positionX, constraintLeft.x,  constraintRight.x);
+		//positionY = Mathf.Clamp(positionY, constraintBottom.y + 12, constraintTop.y - 12);
 
 		Vector3 updatedCameraPosition = new Vector3(positionX, positionY, positionZ);
 
