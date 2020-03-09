@@ -96,5 +96,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraHorizontalOffset: 0
-  cameraVerticalOffset: 10
+  cameraVerticalOffset: 0
   cameraDepthOffset: 0

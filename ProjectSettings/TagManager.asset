@@ -18,6 +18,9 @@ TagManager:
   - Cam Constraint Top
   - Cam Constraint Bottom
   - Time
+  - Level Complete Menu
+  - Score Display
+  - Time Display
   layers:
   - Default
   - TransparentFX

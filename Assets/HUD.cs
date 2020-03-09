@@ -9,7 +9,7 @@ public class HUD : MonoBehaviour {
 	TMPro.TextMeshProUGUI scoreValue;
 
 	float startTime;
-	string finalTime = "";
+	float finalTime = 0;
 
 	List<string> queuedScoreTypes= new List<string>();
 	List<float> queuedScoreValues = new List<float>();
@@ -33,9 +33,11 @@ public class HUD : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 
-		if (finalTime.Length == 0) {
+		if (finalTime == 0) {
 			float roundedTime = Mathf.Round((Time.time - startTime) * 100) / 100;
 			timeText.text = roundedTime.ToString();
+		} else {
+			timeText.text = finalTime.ToString();
 		}
 
 		if (queuedScoreTypes.Count > 0) {
@@ -51,7 +53,7 @@ public class HUD : MonoBehaviour {
 			float valueToDisplay = (float) queuedScoreValues[queuedScoreValues.Count - 1];
 
 			scoreType.text = queuedScoreTypes[0];
-			scoreValue.text = queuedScoreValues[0].ToString();
+			scoreValue.text = "+" + queuedScoreValues[0].ToString();
 			timeSinceDisplayedScore = Time.time;
 
 			if (queuedScoreTypes.Count > 0) {
@@ -60,15 +62,15 @@ public class HUD : MonoBehaviour {
 			};
 
 			if (queuedScoreTypes.Count == 0) {
-				print("no Scores");
 				Invoke("RemoveScoreDisplay", 1f);
 			} 
 		}
 	}
 
-	public void GetFinalTime() {
+	public void StopTimer() {
 		float roundedTime = Mathf.Round((Time.time - startTime) * 100) / 100;
-		finalTime = roundedTime.ToString();
+		finalTime = roundedTime;
+		print(finalTime);
 	}
 
 	public void QueueNewScore(string type, float value) {
@@ -82,18 +84,14 @@ public class HUD : MonoBehaviour {
 			scoreValue.text = "";
 		}
 	}
-}
 
-public class Score {
-	public string type;
-	public float value;
+	public float GetFinalTime() {
 
-	public Score(string type, float value) {
-		this.type = type;
-		this.value = value;
-	}
+		StopTimer();
 
-	public float GetValue() {
-		return this.value;
+		print("i am returning " + finalTime);
+
+		return finalTime;
 	}
 }
+

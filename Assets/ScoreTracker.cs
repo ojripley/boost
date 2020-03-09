@@ -38,6 +38,18 @@ public class ScoreTracker : MonoBehaviour {
 		}
   }
 
+	public void AddLandingScore() {
+		totalScore += 10000f;
+
+		hud.QueueNewScore("Touchdown!", 10000f);
+	}
+
+	public void AddEnemyDestroyedScore() {
+		totalScore += 5000f;
+
+		hud.QueueNewScore("Enemy Destroyed!", 5000f);
+	}
+
 	private void TrackBurnTime() {
 
 		if (Input.GetKeyDown(KeyCode.Space)) {
@@ -53,7 +65,7 @@ public class ScoreTracker : MonoBehaviour {
 		if ((Time.time - burnStartTime) - burnStreak >= 1f && isBurning) {
 			burnStreak++;
 			totalScore += burnStreak * 100;
-			hud.QueueNewScore(burnStreak + "s BOOST!", burnStreak * 100);
+			hud.QueueNewScore(burnStreak + "s BOOST!", burnStreak * 1000f);
 		}
 	}
 
@@ -120,7 +132,7 @@ public class ScoreTracker : MonoBehaviour {
 			if (degreesFlipped < degreesFlippedFramePrior) {
 				flipsThisRotation++;
 				if (flipsThisRotation > 0) {
-					hud.QueueNewScore(flipsThisRotation + "x FLIP!", flipsThisRotation * 100);
+					hud.QueueNewScore(flipsThisRotation + "x FLIP!", flipsThisRotation * 1000f);
 					print("flips: " + flipsThisRotation);
 				}
 			}
@@ -135,10 +147,16 @@ public class ScoreTracker : MonoBehaviour {
 			if (degreesFlipped < degreesFlippedFramePrior) {
 				flipsThisRotation++;
 				if (flipsThisRotation > 0) {
-					hud.QueueNewScore(flipsThisRotation + "x FLIP!", flipsThisRotation * 100);
+					hud.QueueNewScore(flipsThisRotation + "x FLIP!", flipsThisRotation * 1000f);
 					print("flips: " + flipsThisRotation);
 				}
 			}
 		}
+	}
+
+	public float GetBaseScore() {
+
+
+		return totalScore;
 	}
 }

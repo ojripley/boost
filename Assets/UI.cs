@@ -7,11 +7,18 @@ public class UI : MonoBehaviour {
 
 	bool paused = false;
 
-	[SerializeField] Canvas menu;
+	[SerializeField] Canvas pauseMenu;
+	[SerializeField] Canvas levelCompleteMenu;
+
+	[SerializeField] TMPro.TextMeshProUGUI finalTimeDisplay;
+	[SerializeField] TMPro.TextMeshProUGUI finalScoreDisplay;
+
+	string finalTime;
+	string finalScore;
 
   // Start is called before the first frame update
   void Start() {
-		menu.enabled = false;
+		pauseMenu.enabled = false;
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
 	}
@@ -22,16 +29,21 @@ public class UI : MonoBehaviour {
 		HandleMenuDisplay();
   }
 
+	public void SetLevelCompleteMenuDisplay(bool tf) {
+		levelCompleteMenu.enabled = tf;
+	}
 
 	private void HandleMenuDisplay() {
-		if (Time.timeScale == 0) {
-			menu.enabled = true;
+		if (paused && levelCompleteMenu.enabled == false) {
+			pauseMenu.enabled = true;
 			//Time.timeScale = 0;
+			print("turning mouse on");
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
-		} else {
-			menu.enabled = false;
+		} else if (levelCompleteMenu.enabled == false) {
+			pauseMenu.enabled = false;
 			//Time.timeScale = 1;
+			print("turning mouse off");
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 		}
@@ -39,7 +51,7 @@ public class UI : MonoBehaviour {
 
 	public void LoadTitleScreen() {
 		print("dont look at me");
-		//paused = false;
+		paused = false;
 		Time.timeScale = 1;
 		SceneManager.LoadScene(0);
 	}
@@ -51,22 +63,39 @@ public class UI : MonoBehaviour {
 	public void Resume() {
 		print("hmm");
 		Time.timeScale = 1;
-		menu.enabled = false;
+		pauseMenu.enabled = false;
+		paused = false;
 	}
 
 	private void RunPauseControls() {
-		if (Input.GetKeyDown(KeyCode.Escape)) {
+		if (Input.GetKeyDown(KeyCode.Escape) && levelCompleteMenu.enabled == false) {
 			if (Time.timeScale == 1) {
 				Time.timeScale = 0;
+				paused = true;
 			} else {
 				Time.timeScale = 1;
+				paused = false;
 			}
-
-			//			if (paused) {
-			//	paused = false;
-			//} else {
-			//	paused = true;
-			//}
 		}
+	}
+
+	public void LoadNextLevel() {
+		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		currentSceneIndex++;
+
+		if (currentSceneIndex == SceneManager.sceneCountInBuildSettings) {
+			LoadFirstLevel();
+		} else {
+			SceneManager.LoadScene(currentSceneIndex);
+		}
+	}
+
+	private void LoadFirstLevel() {
+		SceneManager.LoadScene(0);
+	}
+
+	public void SetFinalTimeAndScore(float time, float score) {
+		finalTimeDisplay.text = "Time: " + time.ToString();
+		finalScoreDisplay.text = "Score: " + Mathf.Round(score / (time / 10)).ToString();
 	}
 }

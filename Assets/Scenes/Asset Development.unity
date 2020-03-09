@@ -5875,10 +5875,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 224784196, guid: 4a6668f649f9fca42b2867555a51075e, type: 3}
-      propertyPath: cameraVerticalOffset
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4387052897281203750, guid: 4a6668f649f9fca42b2867555a51075e,
         type: 3}
       propertyPath: m_Name

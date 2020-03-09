@@ -7,6 +7,8 @@ public class Rocket : MonoBehaviour {
 	public bool collisionsEnabled = true;
 
 	HUD hud;
+	UI ui;
+	ScoreTracker scoreTracker;
 
 	Rigidbody rigidBody;
 	AudioSource audioSource;
@@ -35,6 +37,9 @@ public class Rocket : MonoBehaviour {
 		rigidBody = GetComponent<Rigidbody>();
 		audioSource = GetComponent<AudioSource>();
 		hud = FindObjectOfType<HUD>();
+		ui = FindObjectOfType<UI>();
+		scoreTracker = FindObjectOfType<ScoreTracker>();
+		ui.SetLevelCompleteMenuDisplay(false);
 	}
 
 	// Update is called once per frame
@@ -43,21 +48,6 @@ public class Rocket : MonoBehaviour {
 
 		if (Debug.isDebugBuild) {
 			HandleDebugInput();
-		}
-	}
-
-	private void LoadFirstLevel() {
-		SceneManager.LoadScene(0);
-	}
-
-	private void LoadNextLevel() {
-		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-		currentSceneIndex++;
-
-		if (currentSceneIndex == SceneManager.sceneCountInBuildSettings) {
-			LoadFirstLevel();
-		} else {
-			SceneManager.LoadScene(currentSceneIndex);
 		}
 	}
 
@@ -102,7 +92,7 @@ public class Rocket : MonoBehaviour {
 					//print("on the launch pad");
 					break;
 				case "Finish":
-					//hud.GetFinalTime();
+					hud.GetFinalTime();
 					HandleLevelComplete();
 					break;
 				case "Fuel":
@@ -141,7 +131,13 @@ public class Rocket : MonoBehaviour {
 
 		state = State.Transcending;
 
-		Invoke("LoadNextLevel", 2.1f);
+		scoreTracker.AddLandingScore();
+
+		ui.SetFinalTimeAndScore(hud.GetFinalTime(), scoreTracker.GetBaseScore());
+		ui.SetLevelCompleteMenuDisplay(true);
+
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
 	}
 
 	private void HandleDeath() {
@@ -216,7 +212,7 @@ public class Rocket : MonoBehaviour {
 
 	private void HandleDebugInput() {
 		if (Input.GetKeyDown(KeyCode.L)) {
-			LoadNextLevel();
+			//LoadNextLevel();
 		} else if (Input.GetKeyDown(KeyCode.C)) {
 			collisionsEnabled = !collisionsEnabled;
 		}
