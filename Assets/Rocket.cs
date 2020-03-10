@@ -207,12 +207,16 @@ public class Rocket : MonoBehaviour {
 		}
 
 		if (Input.GetMouseButtonUp(0)) {
-			Invoke("StopLaser", 0.2f);
+			if (laser.isPlaying) {
+				Invoke("StopLaser", 0.1f);
+			}
 		}
 	}
 
 	private void StopLaser() {
-		laser.Stop();
+		if (!Input.GetMouseButton(0)) {
+			laser.Stop();
+		}
 	}
 
 	private void HandleDebugInput() {
