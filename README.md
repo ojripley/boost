@@ -14,4 +14,5 @@ Destroy Enemy             + 5000
 Score Bonus Pickup        + 7500
 Complete Level            + 10000
 
-Upon completing the level, the player's score is divided by one tenth of the player's time. This ensures players are striving to complete the level as fast as possible.
+Upon completing the level, the player's score is divided by one tenth of the player's time. 
+This ensures players are striving to complete the level as fast as possible.
