@@ -8,8 +8,8 @@ public class HUD : MonoBehaviour {
 	TMPro.TextMeshProUGUI scoreType;
 	TMPro.TextMeshProUGUI scoreValue;
 
-	float startTime;
-	float finalTime = 0;
+	float startTime = 0;
+	float finalTime = 0f;
 
 	List<string> queuedScoreTypes= new List<string>();
 	List<float> queuedScoreValues = new List<float>();
@@ -18,7 +18,7 @@ public class HUD : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		startTime = Time.time;
+		startTime = 0;
 		Transform timer = gameObject.transform.GetChild(0);
 		Transform sT = gameObject.transform.GetChild(1);
 		Transform sV = gameObject.transform.GetChild(2);
@@ -32,18 +32,24 @@ public class HUD : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		if (startTime > 0) {
 
-		if (finalTime == 0) {
-			float roundedTime = Mathf.Round((Time.time - startTime) * 100) / 100;
-			timeText.text = roundedTime.ToString();
-		} else {
-			timeText.text = finalTime.ToString();
+			if (finalTime == 0) {
+				float roundedTime = Mathf.Round((Time.time - startTime) * 100) / 100;
+				timeText.text = roundedTime.ToString();
+			} else {
+				timeText.text = finalTime.ToString();
+			}
+
 		}
 
 		if (queuedScoreTypes.Count > 0) {
 			DisplayNewScore();
 		}
+	}
 
+	public void BeginCounting() {
+		startTime = Time.time;
 	}
 
 	public void DisplayNewScore() {

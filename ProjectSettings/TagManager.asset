@@ -21,6 +21,8 @@ TagManager:
   - Level Complete Menu
   - Score Display
   - Time Display
+  - Bonus Score
+  - Bonus Score Pickup
   layers:
   - Default
   - TransparentFX

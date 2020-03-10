@@ -15,7 +15,7 @@ public class Rocket : MonoBehaviour {
 
 	// '[SerializeField]' allows variables to be changed from the Unity Inspector
 	[SerializeField] float progradeThrustMulitplier = 2000f;
-	[SerializeField] float rotationMultiplier = 400f;
+	[SerializeField] float rotationMultiplier = 300f;
 
 	[SerializeField] AudioClip thrustAudio;
 	[SerializeField] AudioClip deathAudio;
@@ -24,11 +24,13 @@ public class Rocket : MonoBehaviour {
 	[SerializeField] ParticleSystem thrustParticles;
 	[SerializeField] ParticleSystem explosionParticles;
 	[SerializeField] ParticleSystem successParticles;
+	[SerializeField] ParticleSystem bonusScoreParticles;
 
 	[SerializeField] ParticleSystem laser;
 
 	public enum State { Alive, Dying, Transcending };
 	public State state = State.Alive;
+	bool hasStarted = false;
 	int shieldLayers = 0;
 
 
@@ -56,11 +58,13 @@ public class Rocket : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider collider) {
-		//print(collider.name);
 		if (state == State.Alive) {
 			switch (collider.gameObject.tag) {
-				case "Shield Trigger":
-					shieldLayers = 3;
+				case "Bonus Score":
+					scoreTracker.AddBonusScore();
+					GameObject bonus = GameObject.FindGameObjectWithTag("Bonus Score Pickup");
+					bonusScoreParticles.Play();
+					bonus.SetActive(false);
 					break;
 				case "Enemy Laser":
 					break;
@@ -99,11 +103,7 @@ public class Rocket : MonoBehaviour {
 					//print("Gassed up homie");
 					break;
 				default:
-					if (shieldLayers > 0) {
-						//print(shieldLayers);
-					} else {
-						HandleDeath();
-					}
+					HandleDeath();
 					break;
 			}
 		}
@@ -154,6 +154,11 @@ public class Rocket : MonoBehaviour {
 	}
 
 	private void HandleInput() {
+
+		if (Input.anyKey && !hasStarted) {
+			hud.BeginCounting();
+			hasStarted = true;
+		}
 
 		if (state == State.Alive) { // disallow controls while transitioning
 			rigidBody.freezeRotation = true; // disallows external control, prevents physics induced spin

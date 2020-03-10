@@ -44,6 +44,12 @@ public class ScoreTracker : MonoBehaviour {
 		hud.QueueNewScore("Touchdown!", 10000f);
 	}
 
+	public void AddBonusScore() {
+		totalScore += 7500f;
+
+		hud.QueueNewScore("Bonus Score!", 7500f);
+	}
+
 	public void AddEnemyDestroyedScore() {
 		totalScore += 5000f;
 
