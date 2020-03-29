@@ -8,8 +8,8 @@
 
 
 ### Scoring
-- Flips                     + 1000 / consectutive flip
-- Boost                     + 1000 / consectutive seconds of thrust
+- Flips                     + 1000 per consectutive flip
+- Boost                     + 1000 per consectutive seconds of thrust
 - Destroy Enemy             + 5000
 - Score Bonus Pickup        + 7500
 - Complete Level            + 10000
